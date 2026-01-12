@@ -6,10 +6,20 @@ git commit -m "Describe your changes"
 git push
 
 
+// Check Git Status
+git branch
+git remote -v
+
 
 //Clear abd
 adb shell pm clear io.appium.uiautomator2.server
 adb shell pm clear io.appium.uiautomator2.server.test
+
+adb devices
+
+//Uninstall adb
+adb uninstall io.appium.uiautomator2.server
+adb uninstall io.appium.uiautomator2.server.test
 
 
 //  Terminate Method Call
@@ -64,3 +74,33 @@ if (!isFirstMethodExecuted) {
     driver.findElement(By.xpath("//android.widget.TextView[@resource-id=\"vidfo.video.player.videoplayer:id/navigation_bar_item_small_label_view\" and @text=\"Music\"]")).click();
 
 //
+public void clickIfExists(By locator) {
+    List<WebElement> elements = driver.findElements(locator);
+    if(!elements.isEmpty()) {
+        elements.get(0).click();
+        System.out.println("✅ Click ho gaya");
+    } else {
+        System.out.println("⏭️ Element nahi mila, skip...");
+    }
+}
+Call karo:
+Java
+
+// 3 sec baad start, 25 sec tak check
+        clickIfExists(By.xpath("//android.widget.Button"), 3, 25);
+
+// ager simple click karwana hy to yeh use karo
+
+ boolean clicked = clickIfPresent(By.xpath("//android.widget.Button"));
+
+ // Third case
+
+  if (clicked) {
+ //            System.out.println("Button found & clicked");
+ //        } else {
+ //            System.out.println("Button not found — continuing test");
+ //        }
+ //        driver.findElements(By.xpath("//android.widget.Button"))
+ //                .stream()
+ //                .findFirst()
+ //                .ifPresent(e -> e.click());

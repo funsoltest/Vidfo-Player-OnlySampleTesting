@@ -1,13 +1,24 @@
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeClass;
+
+//import android.content.Context;
+//import android.content.SharedPreferences;
 
 import java.io.IOException;
 import java.net.URL;
 import java.time.Duration;
+import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class VIDFO {
 
@@ -24,6 +35,7 @@ public class VIDFO {
         caps.setCapability("appium:deviceName", "Android Device");
         caps.setCapability("appium:appPackage", "vidfo.video.player.videoplayer");
         caps.setCapability("appium:appActivity", "com.example.vidfo.ui.activity.MainActivity");
+        caps.setCapability("appium:noReset", true);
 
         driver = new AndroidDriver(
                 new URL("http://127.0.0.1:4723/wd/hub"), caps);
@@ -34,7 +46,69 @@ public class VIDFO {
         System.out.println(">>>> App Started Successfully");
     }
 
-    // Terminate App
+    // 🔹 New Function: Check First Launch
+
+    public boolean isFirstTime() {
+        try {
+            // Agar NextBtn dikhta hai to first time hai
+            driver.findElement(By.xpath("//android.widget.TextView[@resource-id=\"vidfo.video.player.videoplayer:id/nextBtn\"]"));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+//    public boolean checkFirstLaunch() {
+//        try {
+//            // SharedPreferences inside app context
+//            Context appContext = driver.getContext(); // Appium driver context
+//            // Note: If AndroidDriver context can't directly give Context, this can be managed via VIDFO app-side helper
+//            SharedPreferences prefs = ((Context) appContext)
+//                    .getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
+//
+//            boolean isFirstLaunch = prefs.getBoolean("isFirstLaunch", true);
+//
+//            if (isFirstLaunch) {
+//                prefs.edit().putBoolean("isFirstLaunch", false).apply();
+//            }
+//
+//            return isFirstLaunch;
+//
+//        } catch (Exception e) {
+//            System.out.println("Failed to check first launch: " + e.getMessage());
+//            return false;
+//        }
+//    }
+
+    //Click Check karna mila hy ya ni
+    public boolean clickIfExists(By locator, int delaySeconds, int maxWaitSeconds) {
+
+        // Pehle 3 seconds wait karo (delay)
+        try {
+            Thread.sleep(delaySeconds * 1000);
+            System.out.println("⏳ " + delaySeconds + " sec delay complete...");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Ab 25 seconds tak check karo
+        FluentWait<AndroidDriver> wait = new FluentWait<>(driver)
+                .withTimeout(Duration.ofSeconds(maxWaitSeconds))
+                .pollingEvery(Duration.ofMillis(1000))  // Har 1 sec check karo
+                .ignoring(NoSuchElementException.class);
+
+        try {
+            WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
+            element.click();
+            System.out.println("✅ Click ho gaya");
+            return true;
+        } catch (TimeoutException e) {
+            System.out.println("⏭️ Element nahi mila, skip...");
+            return false;
+        }
+    }
+
+            // Terminate App
     public void terminateApp(AppiumDriver driver, String appPackage) {
         try {
             AndroidDriver androidDriver = (AndroidDriver) driver;
@@ -65,6 +139,7 @@ public class VIDFO {
             System.out.println("Permission revoke failed");
         }
     }
+
 }
 
 
