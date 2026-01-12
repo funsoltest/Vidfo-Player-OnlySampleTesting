@@ -8,7 +8,9 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 
 //import android.content.Context;
 //import android.content.SharedPreferences;
@@ -47,7 +49,7 @@ public class VIDFO {
     }
 
     // 🔹 New Function: Check First Launch
-
+    @BeforeMethod
     public boolean isFirstTime() {
         try {
             // Agar NextBtn dikhta hai to first time hai
@@ -108,7 +110,8 @@ public class VIDFO {
         }
     }
 
-            // Terminate App
+    // Terminate App
+
     public void terminateApp(AppiumDriver driver, String appPackage) {
         try {
             AndroidDriver androidDriver = (AndroidDriver) driver;

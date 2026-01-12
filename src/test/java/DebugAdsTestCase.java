@@ -1,4 +1,5 @@
 import org.openqa.selenium.By;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
@@ -43,6 +44,13 @@ public class DebugAdsTestCase extends VIDFO {
         }
         System.out.println("=== Splash to Home Function End ===");
         Thread.sleep(500);
+    }
+    @AfterClass
+    public void CloseApp(){
+        if (driver != null) {
+            System.out.println("Closing Application");
+            driver.quit();
+        }
     }
 }
 
