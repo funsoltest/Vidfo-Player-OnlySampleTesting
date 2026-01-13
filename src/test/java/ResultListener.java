@@ -96,6 +96,8 @@ public class ResultListener implements ITestListener {
         }
     }
 
+    //For Basic Detils Use Below Functios
+
 //    @Override
 //    public void onTestStart(ITestResult result) {
 //        System.out.println("\n▶ Test Started: " + result.getName());
