@@ -1,7 +1,8 @@
+import ParentLauncher.VIDFO;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-public class ScreenShotListener extends VIDFO    implements ITestListener {
+public class ScreenShotListener extends VIDFO implements ITestListener {
 
     // Test fail hote hi ye method call hoga
     @Override

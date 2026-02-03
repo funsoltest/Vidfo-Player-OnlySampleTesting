@@ -1,3 +1,5 @@
+package ParentLauncher;
+
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.apache.commons.io.FileUtils;
@@ -7,7 +9,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 
 //import android.content.Context;
@@ -91,7 +92,7 @@ public class VIDFO {
 //        try {
 //            // SharedPreferences inside app context
 //            Context appContext = driver.getContext(); // Appium driver context
-//            // Note: If AndroidDriver context can't directly give Context, this can be managed via VIDFO app-side helper
+//            // Note: If AndroidDriver context can't directly give Context, this can be managed via ParentLauncher.VIDFO app-side helper
 //            SharedPreferences prefs = ((Context) appContext)
 //                    .getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
 //

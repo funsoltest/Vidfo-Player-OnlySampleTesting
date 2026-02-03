@@ -119,3 +119,12 @@ Parallel Testing
                 bat 'mvn clean test -Dtest=PermissionTestCase'
                 bat 'mvn clean test -Dtest=LoginTest,UploadTest'
 
+                stage('Build & Run Tests') {
+                            steps {
+                                bat '''
+                                echo Running Appium Tests
+                                 'mvn clean test -DsuiteXmlFile=testng.xml'
+
+                                '''
+                            }
+                        }
